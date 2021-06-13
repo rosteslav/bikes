@@ -73,3 +73,8 @@ df_bike_counts.head()
 # new table for how many trips are made on which weather conditions
 df = pd.concat([df_bike_counts, df_waether], axis=1)
 df.head(5)
+
+# %%
+df.isna()
+# %%
+df['count'].isna().values.any()

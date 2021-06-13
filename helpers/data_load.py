@@ -22,6 +22,30 @@ def weather_model(init_mode: DataFrame) -> DataFrame:
     df_waether['time'] = df_waether['time'].apply(date.fromisoformat)
     df_waether = df_waether.set_index('time')
 
+    if(df_waether.isna().values.any()):
+        # partly-cloudy-day is most common and normal for March
+        if(df_waether['summary'].isna().values.any()):
+            df_waether['summary'].fillna('partly-cloudy-day')
+
+        if(df_waether['temperatureMin'].isna().values.any()):
+            df_waether['temperatureMin'].fillna(df_waether['temperatureMin'].mean())
+
+        if(df_waether['temperatureMax'].isna().values.any()):
+            df_waether['temperatureMax'].fillna(df_waether['temperatureMax'].mean())
+
+        if(df_waether['humidity'].isna().values.any()):
+            df_waether['humidity'].fillna(df_waether['humidity'].mean())
+
+        if(df_waether['windSpeed'].isna().values.any()):
+            df_waether['windSpeed'].fillna(df_waether['windSpeed'].mean())
+
+        if(df_waether['cloudCover'].isna().values.any()):
+            df_waether['cloudCover'].fillna(df_waether['cloudCover'].mean())
+
+        # we can't assume fogginess
+        if(df_waether['visibility'].isna().values.any()):
+            df_waether['visibility'].fillna(10)
+
     return df_waether
 
 
@@ -43,6 +67,18 @@ def bikes_model(init_mode: DataFrame) -> DataFrame:
     df_bikes['time'] = df_bikes['time'].apply(lambda x: date.fromisoformat(x[:10]))
     df_bikes['stoptime'] = df_bikes['stoptime'].apply(lambda x: date.fromisoformat(x[:10]))
     df_bikes['age'] = df_bikes['birth year'].apply(lambda x: 2020 - x)
+
+    if(df_bikes.isna().values.any()):
+        # most common
+        if(df_bikes['usertype'].isna().values.any()):
+            df_bikes['usertype'].fillna('Subscriber')
+
+        if(df_bikes['birth year'].isna().values.any()):
+            df_bikes['birth year'].fillna(df_bikes['birth year'].mean())
+
+        # more than 70% are male
+        if(df_bikes['gender'].isna().values.any()):
+            df_bikes['gender'].fillna(1)
 
     return df_bikes
 
