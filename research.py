@@ -3,11 +3,14 @@
 import pandas as pd
 from datetime import date
 from config import constants
+import os
+from dotenv import load_dotenv
 
 # %%
 # load data and cache it, in order to download large file just once
+load_dotenv()
 df_waether = pd.read_csv(constants.WEATHER_FILE_PATH)
-df_bikes = pd.read_csv(constants.BIKES_FILE_PATH + constants.API_KEY)
+df_bikes = pd.read_csv(constants.BIKES_FILE_PATH + os.getenv('API_KEY'))
 
 # %%
 # set DataFrame with usefull information about the weather
