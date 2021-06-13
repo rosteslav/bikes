@@ -5,6 +5,8 @@ from datetime import date
 from config import constants
 import os
 from dotenv import load_dotenv
+import seaborn as sns
+from matplotlib import pyplot as plt
 
 # %%
 # load data and cache it, in order to download large file just once
@@ -78,3 +80,8 @@ df.head(5)
 df.isna()
 # %%
 df['count'].isna().values.any()
+
+# %%
+sns.heatmap(df.corr())
+# %%
+plt.scatter(df.index, df["count"])

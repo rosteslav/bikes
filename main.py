@@ -4,6 +4,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from classes.day_traffic import DayTraffic
 import pandas as pd
+from helpers.research import research_bikes
 
 global_from_time = datetime.now()
 
@@ -18,7 +19,7 @@ logging.basicConfig(filename=f'log/main_{datetime_now_str}.log',
 
 data = DayTraffic()
 df = pd.DataFrame(data.df_combine)
-print(df.head())
+research_bikes(df)
 
 global_time_delta = datetime.now() - global_from_time
 logging.info(f'Total time: {global_time_delta}')
